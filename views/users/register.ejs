@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate')%>
+    <div class="container d-flex justify-content-center align-items-center mt-3">
+        <div class="row justify-content-center" style="width: 50em;">
+            <div class="mb-5">
+                <div class="card shadow">
+                    <!-- <img src="https://res.cloudinary.com/depkm8h6l/image/upload/f_auto,q_auto/v1/fikom-showcase/logo-fikom"
+                    alt="" class="card-img-top bg-secondary" style="width: 10em;"/> -->
+                    <div class="card-body">
+                        <h5 class="card-title text-center border-bottom py-3 mb-4">Register</h5>
+                        <form action="/register" method="POST" class="validated-form needs-validation" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="username"><b>Username</b></label>
+                                        <input class="form-control" type="text" id="username" name="username" required
+                                            autofocus>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input class="form-control" type="email" id="email" name="email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input class="form-control" type="password" id="password" name="password"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="name">Nama Lengkap</label>
+                                        <input class="form-control" type="text" id="name" name="name" required
+                                            autofocus>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="nim">Nomor Induk Mahasiswa</label>
+                                        <input class="form-control" type="text" id="nim" name="nim" required
+                                            autofocus>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="faculty">Fakultas</label>
+                                        <input class="form-control" type="text" id="faculty" name="faculty" required
+                                            autofocus>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-8">
+                                            <label class="form-label" for="department">Program Studi</label>
+                                            <input class="form-control" type="text" id="department" name="department"
+                                                required autofocus>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label" for="batch">Angkatan</label>
+                                            <input class="form-control" type="text" id="batch" name="batch" required
+                                                autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success btn-block">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
