@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Review = require('./review');
+const mongoose = require("mongoose");
+const Review = require("./review");
 const { Schema } = mongoose;
 
 // https://res.cloudinary.com/depkm8h6l/image/upload/w_300/v1700288641/YelpCamp/pz9hc3pirqmfepz9wcch.jpg
@@ -8,8 +8,8 @@ const ImageSchema = new Schema({
   filename: String,
 });
 
-ImageSchema.virtual('thumbnail').get(function () {
-  return this.url.replace('/upload', '/upload/w_200');
+ImageSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/w_200");
 });
 
 const opts = { toJSON: { virtuals: true } };
@@ -23,25 +23,25 @@ const ProjectSchema = new Schema(
     images: [ImageSchema],
     author: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     reviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Review',
+        ref: "Review",
       },
     ],
   },
   opts
 );
 
-// 
+//
 
-ProjectSchema.virtual('properties.popUpMarkup').get(function () {
+ProjectSchema.virtual("properties.popUpMarkup").get(function () {
   return `<a href="/projects/${this._id}">${this.title}</a>`;
 });
 
-ProjectSchema.post('findOneAndDelete', async (doc) => {
+ProjectSchema.post("findOneAndDelete", async (doc) => {
   if (doc) {
     // delete all reviews where their ID field is in
     // the 'doc' or in the deleted campground
@@ -53,4 +53,4 @@ ProjectSchema.post('findOneAndDelete', async (doc) => {
   }
 });
 
-module.exports = mongoose.model('Project', ProjectSchema);
+// module.exports = mongoose.model('Project', ProjectSchema);

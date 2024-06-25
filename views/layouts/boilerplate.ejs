@@ -12,11 +12,15 @@
 
 <body class="d-flex flex-column vh-100">
     <%- include('../partials/navbar') %>
-
-        <main class="container mt-5 flex-shrink-0">
-            <%- include('../partials/flash') %>
-                <%- body %>
-        </main>
+        <div class="d-flex">
+            <%- include('../partials/sidebar') %>
+                <div class="p-4 flex-grow-1">
+                    <main class="container mt-5 flex-shrink-0">
+                        <%- include('../partials/flash') %>
+                            <%- body %>
+                    </main>
+                </div>
+        </div>
 
         <%- include('../partials/footer') %>
 

@@ -25,13 +25,23 @@ const extension = (joi) => ({
 
 const Joi = BaseJoi.extend(extension);
 
-module.exports.campgroundSchema = Joi.object({
-  campground: Joi.object({
+// module.exports.campgroundSchema = Joi.object({
+//   campground: Joi.object({
+//     title: Joi.string().required().escapeHTML(),
+//     price: Joi.number().required().min(0),
+//     // image: Joi.string().required(),
+//     location: Joi.string().required().escapeHTML(),
+//     description: Joi.string().required().escapeHTML(),
+//   }).required(),
+//   deleteImages: Joi.array(),
+// });
+
+module.exports.newsSchema = Joi.object({
+  news: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    price: Joi.number().required().min(0),
-    // image: Joi.string().required(),
-    location: Joi.string().required().escapeHTML(),
-    description: Joi.string().required().escapeHTML(),
+    subtitle: Joi.string().escapeHTML(),
+    body: Joi.string().required(),
+    category: Joi.string().required().valid("regional", "witel"),
   }).required(),
   deleteImages: Joi.array(),
 });
@@ -57,19 +67,19 @@ module.exports.campgroundSchema = Joi.object({
 //   opts
 // );
 
-module.exports.projectSchema = Joi.object({
-  project: Joi.object({
-    title: Joi.string().required().escapeHTML(),
-    description: Joi.string().required().escapeHTML(),
-    repository: Joi.string().required().escapeHTML(),
-    category: Joi.string().required().escapeHTML(),
-  }).required(),
-  deleteImages: Joi.array(),
-});
+// module.exports.projectSchema = Joi.object({
+//   project: Joi.object({
+//     title: Joi.string().required().escapeHTML(),
+//     description: Joi.string().required().escapeHTML(),
+//     repository: Joi.string().required().escapeHTML(),
+//     category: Joi.string().required().escapeHTML(),
+//   }).required(),
+//   deleteImages: Joi.array(),
+// });
 
-module.exports.reviewSchema = Joi.object({
-  review: Joi.object({
-    rating: Joi.number().required().min(1).max(5),
-    body: Joi.string().required().escapeHTML(),
-  }).required(),
-});
+// module.exports.reviewSchema = Joi.object({
+//   review: Joi.object({
+//     rating: Joi.number().required().min(1).max(5),
+//     body: Joi.string().required().escapeHTML(),
+//   }).required(),
+// });

@@ -2,17 +2,17 @@
   "engines": {
     "node": "18.13.0"
   },
-  "name": "fikom-showcase",
+  "name": "public-relation-telkom-regional-vii",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon app.js"
+    "start-dev": "nodemon app.js",
+    "start": "node app.js"
   },
-  "author": "afdal",
+  "author": "afdaladiguna",
   "license": "ISC",
   "dependencies": {
-    "@mapbox/mapbox-sdk": "^0.15.3",
     "axios": "^1.5.1",
     "cloudinary": "^1.41.0",
     "connect-flash": "^0.1.1",
