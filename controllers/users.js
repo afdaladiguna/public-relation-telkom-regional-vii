@@ -9,14 +9,11 @@ module.exports.register = async (req, res, next) => {
     const { username, password, name, admin } = req.body;
     const user = new User({ username, name, admin });
     const registeredUser = await User.register(user, password);
-    req.login(registeredUser, (err) => {
-      if (err) return next(err);
-      req.flash("success", "Register succesfully!");
-      res.redirect("/dashboard");
-    });
+    req.flash("success", "Register succesfully!");
+    res.redirect("/register");
   } catch (e) {
     req.flash("error", e.message);
-    res.redirect("register");
+    res.redirect("/register");
   }
 };
 
@@ -26,7 +23,7 @@ module.exports.renderLogin = (req, res) => {
 
 module.exports.login = (req, res) => {
   req.flash("success", "Welcome back!");
-  const redirectUrl = res.locals.returnTo || "/projects"; // update this line to use res.locals.returnTo now
+  const redirectUrl = res.locals.returnTo || "/dashboard"; // update this line to use res.locals.returnTo now
   res.redirect(redirectUrl);
 };
 
@@ -36,7 +33,7 @@ module.exports.logout = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    req.flash("success", "Goodbye!");
-    res.redirect("/");
+    req.flash("success", "Logout success!");
+    res.redirect("/login");
   });
 };

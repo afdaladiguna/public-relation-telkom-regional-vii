@@ -6,15 +6,16 @@ const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
   const news = await News.find({});
-  res.render("news/index", { news });
+  res.render("management/index", { news });
 };
 
 module.exports.renderNewForm = (req, res) => {
-  res.render("news/new");
+  res.render("management/new");
 };
 
 module.exports.createNews = async (req, res, next) => {
   const news = new News(req.body.news);
+  console.log(news);
   news.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,

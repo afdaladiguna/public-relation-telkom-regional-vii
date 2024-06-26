@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate.ejs') %>
+  <main class="container">
+    <div class="row">
+      <div class="d-flex justify-content-between">
+        <h1 class="fs-3">Management</h1>
+        <div class="my-auto">
+          <a href="/management/news/write" class="btn btn-primary btn-sm">Add News</a>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th scope="col">News</th>
+          <th scope="col">Writer</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let item of news) { %>
+          <tr>
+            <td class="w-50">
+              <%= item.title %>
+            </td>
+            <td>
+              <%= item.author %>
+            </td>
+            <td>
+              <%= item.createdAt.toLocaleString('en-GB') %>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </main>

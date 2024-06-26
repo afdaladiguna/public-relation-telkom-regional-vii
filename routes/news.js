@@ -13,7 +13,7 @@ const News = require("../models/news");
 
 router
   .route("/")
-  .get(catchAsync(news.index))
+  .get(isLoggedIn, catchAsync(news.index))
   .post(
     isLoggedIn,
     upload.array("image"),
@@ -21,7 +21,7 @@ router
     catchAsync(news.createNews)
   );
 
-router.get("/new", isLoggedIn, news.renderNewForm);
+router.get("/write", isLoggedIn, news.renderNewForm);
 
 router
   .route("/:id")

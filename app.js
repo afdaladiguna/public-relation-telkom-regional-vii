@@ -145,6 +145,10 @@ app.get("/", (req, res) => {
   res.redirect("/dashboard");
 });
 
+app.get("/news", isLoggedIn, (req, res) => {
+  res.render("news");
+});
+
 app.get("/dashboard", isLoggedIn, (req, res) => {
   res.render("dashboard");
 });

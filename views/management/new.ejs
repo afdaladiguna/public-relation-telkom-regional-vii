@@ -1,0 +1,76 @@
+<% layout('layouts/boilerplate.ejs') %>
+  <div class="row">
+    <div class="col">
+      Add News
+      <form action="/management/news" method="POST" enctype="multipart/form-data">
+        <div>
+          <label for="title">Title News</label>
+          <input type="text" id="title" name="news[title]">
+        </div>
+        <div>
+          <label for="subtitle">Sub Title News</label>
+          <input type="text" id="subtitle" name="news[subtitle]">
+        </div>
+        <div>
+          <label for="body">Body</label>
+          <input type="text" id="body" name="news[body]">
+        </div>
+        <div>
+          <select name="news[category]" id="category">
+            <option value="regional">Regional</option>
+            <option value="witel">Witel</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Gambar</label>
+          <input class="form-control" type="file" id="image" name="image" multiple>
+        </div>
+        <button>Submit</button>
+      </form>
+    </div>
+
+
+    <div class="col">
+      <div>
+        <a href="btn btn-primary">Submit</a>
+      </div>
+      <div>
+        <select name="" id="">
+          <option value="regional">Regional</option>
+          <option value="witel">Witel</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h1 class="text-center">Proyek Baru</h1>
+    <div class="col-md-6 offset-md-3">
+      <form action="/projects" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div class="mb-3">
+          <label class="form-label" for="title">Judul Proyek</label>
+          <input class="form-control" type="text" id="title" name="project[title]" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="description">Deskripsi</label>
+          <textarea class="form-control" type="text" id="description" rows="5" name="project[description]"
+            required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="repository">Repository</label>
+          <input class="form-control" type="text" id="repository" name="project[repository]" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="category">Kategori</label>
+          <input class="form-control" type="text" id="category" name="project[category]" required>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Gambar</label>
+          <input class="form-control" type="file" id="image" name="image" multiple>
+        </div>
+        <div class="mb-3 py-2">
+          <button class="btn btn-success">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
