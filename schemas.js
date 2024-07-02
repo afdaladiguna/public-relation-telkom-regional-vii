@@ -39,10 +39,10 @@ const Joi = BaseJoi.extend(extension);
 module.exports.newsSchema = Joi.object({
   news: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    subtitle: Joi.string().escapeHTML(),
+    subtitle: Joi.string().allow("").escapeHTML(),
     body: Joi.string().required(),
     category: Joi.string().required().valid("regional", "witel"),
-  }).required(),
+  }),
   deleteImages: Joi.array(),
 });
 

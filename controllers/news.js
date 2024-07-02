@@ -27,14 +27,14 @@ module.exports.createNews = async (req, res, next) => {
 };
 
 module.exports.showNews = async (req, res) => {
-  const news = await news.findById(req.params.id);
+  const news = await News.findById(req.params.id);
   // .populate({ path: "reviews", populate: { path: "author" } })
   // .populate("author");
   if (!news) {
     req.flash("error", "Cannot find that news!");
     return res.redirect("/news");
   }
-  res.render("news/show", { news });
+  res.render("management/show", { news });
 };
 
 module.exports.renderEditForm = async (req, res) => {
