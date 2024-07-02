@@ -18,6 +18,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 
 const User = require("./models/user");
+const News = require("./models/news");
 const userRoutes = require("./routes/users");
 
 // const projectRoutes = require("./routes/projects");
@@ -145,8 +146,18 @@ app.get("/", (req, res) => {
   res.redirect("/dashboard");
 });
 
-app.get("/news", isLoggedIn, (req, res) => {
-  res.render("news");
+app.get("/news", isLoggedIn, async (req, res) => {
+  const news = await News.find({});
+  res.render("news", { news });
+});
+
+app.get("/news/:id", isLoggedIn, async (req, res) => {
+  const news = await News.findById(req.params.id);
+  if (!news) {
+    req.flash("error", "Cannot find that news!");
+    return res.redirect("/news");
+  }
+  res.render("management/show", { news });
 });
 
 app.get("/dashboard", isLoggedIn, (req, res) => {

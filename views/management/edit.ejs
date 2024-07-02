@@ -1,0 +1,94 @@
+<head>
+  <!-- Other head elements -->
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+</head>
+
+<% layout('layouts/boilerplate.ejs') %>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-9">
+        <h2>Edit News</h2>
+        <form action="/management/news/<%= news._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title News</label>
+            <input type="text" class="form-control" id="title" name="news[title]" value="<%= news.title %>">
+          </div>
+          <div class="mb-3">
+            <label for="subtitle" class="form-label">Sub Title News</label>
+            <input type="text" class="form-control" id="subtitle" name="news[subtitle]" value="<%= news.subtitle %>">
+          </div>
+          <div class="mb-3">
+            <label for="editor" class="form-label">Body</label>
+            <div id="editor" style="height: 300px;">
+              <%- news.body %>
+            </div>
+            <input type="hidden" id="body" name="news[body]">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Gambar</label>
+            <input class="form-control" type="file" id="image" name="image" multiple>
+          </div>
+          <div class="mb-3">
+            <% news.images.forEach(function(img, i) { %>
+              <img src="<%= img.thumbnail %>" alt="" class="img-thumbnail">
+              <div class="form-check-inline">
+                <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%= img.filename %>">
+              </div>
+              <label for="image-<%=i%>">Delete?</label>
+              <% }) %>
+          </div>
+      </div>
+
+      <!-- LEFT INFORMATION -->
+      <div class="col-md-3">
+        <div class="border border-1 rounded py-4 px-3 position-sticky" style="top: 20px;">
+          <div class="d-flex flex-row-reverse">
+            <button type="submit" class="btn btn-primary py-2 px-4 mb-4">Save News</button>
+          </div>
+          <div class="mb-3 fw-bold">
+            <label for="categoryInfo" class="mb-1">Category</label>
+            <select class="form-select mb-4" id="categoryInfo" name="news[category]">
+              <option value="regional" <%=news.category==='regional' ? 'selected' : '' %>>Regional</option>
+              <option value="witel" <%=news.category==='witel' ? 'selected' : '' %>>Witel</option>
+            </select>
+          </div>
+          <div class="border border-light-subtle my-3"></div>
+          <div class="mb-3">
+            <label class="fw-bold">Created At</label>
+            <p class="text-secondary">
+              <%= new Date(news.createdAt).toLocaleString('en-GB') %>
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="fw-bold">Updated At</label>
+            <p class="text-secondary">
+              <%= new Date(news.updatedAt).toLocaleString('en-GB') %>
+            </p>
+          </div>
+          <div class="border border-light-subtle my-3"></div>
+          <div class="mb-3">
+            <label class="fw-bold">Contributor</label>
+            <p class="text-secondary">
+              <%= currentUser.name %>
+            </p>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+  <!-- Initialize Quill editor -->
+  <script>
+    const quill = new Quill('#editor', {
+      theme: 'snow'
+    });
+
+    const form = document.querySelector('form');
+    form.onsubmit = function () {
+      const bodyInput = document.querySelector('#body');
+      bodyInput.value = quill.root.innerHTML;
+    };
+  </script>

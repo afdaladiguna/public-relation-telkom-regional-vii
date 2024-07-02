@@ -23,7 +23,7 @@ module.exports.createNews = async (req, res, next) => {
   news.author = req.user._id;
   await news.save();
   req.flash("success", "Successfully made a new news!");
-  res.redirect(`/news/${news._id}`);
+  res.redirect(`news/${news._id}`);
 };
 
 module.exports.showNews = async (req, res) => {
@@ -44,7 +44,7 @@ module.exports.renderEditForm = async (req, res) => {
     req.flash("error", "Cannot find that news!");
     return res.redirect(`/news/${id}`);
   }
-  res.render("news/edit", { news });
+  res.render("management/edit", { news });
 };
 
 module.exports.updateNews = async (req, res) => {
@@ -66,7 +66,7 @@ module.exports.updateNews = async (req, res) => {
     });
   }
   req.flash("success", "Successfully update news!");
-  res.redirect(`/news/${news._id}`);
+  res.redirect(`news/${news._id}`);
 };
 
 module.exports.deleteNews = async (req, res) => {
@@ -76,5 +76,5 @@ module.exports.deleteNews = async (req, res) => {
     await cloudinary.uploader.destroy(image.filename);
   }
   req.flash("success", "Successfully deleted news!");
-  res.redirect("/news");
+  res.redirect("/management/news");
 };

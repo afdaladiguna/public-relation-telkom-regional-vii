@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 const { newsSchema } = require("./schemas");
 const ExpressError = require("./utils/ExpressError");
-const Project = require("./models/project");
+const News = require("./models/news");
 const Review = require("./models/review");
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -42,8 +42,8 @@ module.exports.validateNews = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
-  const project = await Project.findById(id);
-  if (!project.author.equals(req.user._id)) {
+  const news = await News.findById(id);
+  if (!news.author.equals(req.user._id)) {
     req.flash("error", "You do not have permission.");
     return res.redirect(`/news/${id}`);
   }
