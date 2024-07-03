@@ -23,6 +23,7 @@ const userRoutes = require("./routes/users");
 
 // const projectRoutes = require("./routes/projects");
 const newsRoutes = require("./routes/news");
+const albumRoutes = require("./routes/album");
 const { isLoggedIn } = require("./middleware");
 // const reviewRoutes = require("./routes/reviews");
 const dbUrl = process.env.DB_URL;
@@ -139,6 +140,7 @@ app.use((req, res, next) => {
 
 app.use("/", userRoutes);
 app.use("/management/news", newsRoutes);
+app.use("/management/album", albumRoutes);
 // app.use("/projects", projectRoutes);
 // app.use("/projects/:id/reviews", reviewRoutes);
 

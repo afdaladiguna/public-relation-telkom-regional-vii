@@ -15,7 +15,6 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createNews = async (req, res, next) => {
   const news = new News(req.body.news);
-  console.log(news);
   news.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,

@@ -1,0 +1,77 @@
+<% layout('layouts/boilerplate.ejs') %>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-9">
+        <h2>Add album</h2>
+        <form action="/management/album" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title album</label>
+            <input type="text" class="form-control" id="title" name="album[title]">
+          </div>
+          <div class="mb-3">
+            <label for="subtitle" class="form-label">Description</label>
+            <input type="text" class="form-control" id="subtitle" name="album[subtitle]">
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Kegiatan Acara</label>
+            <input type="date" class="form-control" id="date" name="album[date]">
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Gambar</label>
+            <input class="form-control" type="file" id="image" name="image" multiple>
+          </div>
+          <button type="submit" class="btn btn-primary py-2 px-4 mb-4">Submit</button>
+      </div>
+
+      <!-- LEFT INFORMATION -->
+      <!-- <div class="col-md-3">
+        <div class="border border-1 rounded py-4 px-3 position-sticky" style="top: 20px;">
+          <div class="d-flex flex-row-reverse">
+          </div>
+          <div class="mb-3 fw-bold">
+            <label for="categoryInfo" class="mb-1">Category</label>
+            <select class="form-select mb-4" id="categoryInfo" name="album[category]">
+              <option value="regional">Regional</option>
+              <option value="witel">Witel</option>
+            </select>
+          </div>
+          <div class="border border-light-subtle my-3"></div>
+          <div class="mb-3">
+            <label class="fw-bold">Created At</label>
+            <p class="text-secondary">
+              <%= new Date().toLocaleString('en-GB') %>
+            </p>
+          </div>
+          <div class="mb-3">
+            <label class="fw-bold">Updated At</label>
+            <p class="text-secondary">
+              <%= new Date().toLocaleString('en-GB') %>
+            </p>
+          </div>
+          <div class="border border-light-subtle my-3"></div>
+          <div class="mb-3">
+            <label class="fw-bold">Contributor</label>
+            <p class="text-secondary">
+              <%= currentUser.name %>
+            </p>
+          </div>
+        </div>
+      </div> -->
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+  <!-- Initialize Quill editor -->
+  <script>
+    const quill = new Quill('#editor', {
+      theme: 'snow'
+    });
+
+    const form = document.querySelector('form');
+    form.onsubmit = function () {
+      const bodyInput = document.querySelector('#body');
+      bodyInput.value = quill.root.innerHTML;
+    };
+  </script>
