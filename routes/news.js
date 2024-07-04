@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn, validateNews, isAuthor } = require("../middleware");
-// const projects = require("../controllers/projects");
+const { isLoggedIn, validateNews, isAdmin } = require("../middleware");
 const news = require("../controllers/news");
 const catchAsync = require("../utils/catchAsync");
 const multer = require("multer");
 const { storage } = require("../cloudinary");
 const upload = multer({ storage });
 
-// const Project = require("../models/project");
 const News = require("../models/news");
 
 router
@@ -16,25 +14,26 @@ router
   .get(isLoggedIn, catchAsync(news.index))
   .post(
     isLoggedIn,
+    isAdmin,
     upload.array("image"),
     validateNews,
     catchAsync(news.createNews)
   );
 
-router.get("/write", isLoggedIn, news.renderNewForm);
+router.get("/write", isLoggedIn, isAdmin, news.renderNewForm);
 
 router
   .route("/:id")
   .get(isLoggedIn, catchAsync(news.showNews))
   .put(
     isLoggedIn,
-    isAuthor,
+    isAdmin,
     upload.array("image"),
     validateNews,
     catchAsync(news.updateNews)
   )
-  .delete(isLoggedIn, isAuthor, catchAsync(news.deleteNews));
+  .delete(isLoggedIn, isAdmin, catchAsync(news.deleteNews));
 
-router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(news.renderEditForm));
+router.get("/:id/edit", isLoggedIn, isAdmin, catchAsync(news.renderEditForm));
 
 module.exports = router;

@@ -23,7 +23,7 @@ module.exports.createAlbum = async (req, res, next) => {
   album.author = req.user._id;
   await album.save();
   req.flash("success", "Successfully made a new album!");
-  res.redirect(`album/${album._id}`);
+  res.redirect(`/album/${album._id}`);
 };
 
 module.exports.showAlbum = async (req, res) => {

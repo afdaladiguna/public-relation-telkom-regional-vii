@@ -1,0 +1,77 @@
+<% layout('layouts/boilerplate.ejs') %>
+
+  <main class="container mt-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-between mb-4">
+          <h1 class="fs-4 fw-bold">
+            <%= album.title %>
+          </h1>
+          <div>
+            <a href="/management/album" class="btn btn-outline-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#000" class="bi bi-arrow-left me-2"
+                viewBox="0 1 16 16">
+                <path fill-rule="evenodd"
+                  d="M5.854 4.146a.5.5 0 0 0-.708 0L.146 9.146a.5.5 0 0 0 0 .708l5 5a.5.5 0 0 0 .708-.708L1.707 9.5H15.5a.5.5 0 0 0 0-1H1.707l4.147-4.146a.5.5 0 0 0 0-.708z" />
+              </svg>Back
+            </a>
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="text-muted">
+            <%= album.date %>
+          </p>
+          <p>
+            <%= album.description %>
+          </p>
+        </div>
+        <div class="row">
+          <div class="masonry">
+            <% album.images.forEach((image, index)=> { %>
+              <div class="masonry-item">
+                <div class="card">
+                  <img src="<%= image.url %>" class="card-img-top" alt="Album Image <%= index+1 %>">
+                  <div class="card-body">
+                    <p class="card-text">
+                      <%= image.caption %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .masonry {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -15px;
+      /* Adjust for gutter */
+      width: auto;
+    }
+
+    .masonry-item {
+      width: calc(33.333% - 15px);
+      /* Adjust for gutter and desired column count */
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .masonry-item {
+        width: calc(50% - 15px);
+        /* Two columns on smaller screens */
+      }
+    }
+
+    @media (max-width: 576px) {
+      .masonry-item {
+        width: calc(100% - 15px);
+        /* Single column on extra small screens */
+      }
+    }
+  </style>

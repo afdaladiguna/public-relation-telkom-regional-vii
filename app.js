@@ -19,6 +19,7 @@ const LocalStrategy = require("passport-local");
 
 const User = require("./models/user");
 const News = require("./models/news");
+const Album = require("./models/album");
 const userRoutes = require("./routes/users");
 
 // const projectRoutes = require("./routes/projects");
@@ -148,6 +149,21 @@ app.get("/", (req, res) => {
   res.redirect("/dashboard");
 });
 
+app.get("/album", isLoggedIn, async (req, res) => {
+  const album = await Album.find({});
+  // console.log(album);
+  res.render("album", { album });
+});
+
+app.get("/album/:id", isLoggedIn, async (req, res) => {
+  const album = await Album.findById(req.params.id);
+  if (!album) {
+    req.flash("error", "Cannot find that album!");
+    return res.redirect("/album");
+  }
+  res.render("management/album/show", { album });
+});
+
 app.get("/news", isLoggedIn, async (req, res) => {
   const news = await News.find({});
   res.render("news", { news });
@@ -162,8 +178,15 @@ app.get("/news/:id", isLoggedIn, async (req, res) => {
   res.render("management/show", { news });
 });
 
-app.get("/dashboard", isLoggedIn, (req, res) => {
-  res.render("dashboard");
+app.get("/dashboard", isLoggedIn, async (req, res) => {
+  const albums = await Album.find().limit(3); // Adjust limit as needed
+  const news = await News.find().limit(4); // Adjust limit as needed
+  const breakingNews = await News.find().sort({ createdAt: -1 }).limit(5); // Latest breaking news
+  const upcomingEvents = await Album.find({
+    eventDate: { $gte: new Date() },
+  }).limit(5); // Upcoming events
+
+  res.render("dashboard", { albums, news, breakingNews, upcomingEvents });
 });
 
 app.all("*", (req, res, next) => {

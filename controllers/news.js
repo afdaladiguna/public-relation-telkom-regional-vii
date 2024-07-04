@@ -22,7 +22,7 @@ module.exports.createNews = async (req, res, next) => {
   news.author = req.user._id;
   await news.save();
   req.flash("success", "Successfully made a new news!");
-  res.redirect(`news/${news._id}`);
+  res.redirect(`/news`);
 };
 
 module.exports.showNews = async (req, res) => {

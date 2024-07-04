@@ -1,17 +1,130 @@
+<head>
+    <style>
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 2em;
+            font-size: 1.5rem;
+            /* Adjust size */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Example background color */
+            color: white;
+            /* Example text color */
+        }
+    </style>
+</head>
 <% layout('layouts/boilerplate.ejs') %>
 
-    <!-- <main class="px-3">
-            <h1><span class="text-warning">Fikom</span>Showcase</h1>
-            <p class="lead pb-5 mb-5"> Selamat Datang di FikomShowcase! Disini, Anda dapat menemukan berbagai proyek
-                inovatif yang telah dibuat oleh mahasiswa.</p>
-            <p class="lead mt-5 pt-5">
-                Anda juga bisa ikut berpartisipasi! Pamerkan karya Anda, bagikan pengalaman, dan berikan komentar serta
-                ulasan. Mari saling menginspirasi dan berkolaborasi untuk menciptakan lingkungan akademis yang dinamis
-                dan inovatif.</p>
-            <a href="/projects" class="btn btn btn-secondary font-weight-bold border-white bg-white">Lihat Proyek
-                Mahasiswa</a>
-        </main> -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Main Content Area -->
+            <div class="col-md-9">
+                <!-- News Section -->
+                <div class="mb-4">
+                    <h4 class="fw-bold">Latest News</h4>
+                    <div class="row">
+                        <% news.forEach(item=> { %>
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100">
+                                    <% if(item.images.length) { %>
+                                        <img src="<%= item.images[0].url %>" class="card-img-top" alt="News Image">
+                                        <% } else { %>
+                                            <div class="bg-secondary d-flex align-items-center justify-content-center"
+                                                style="width: auto; height: 200px;">
+                                                <span class="text-white">No Image</span>
+                                            </div>
+                                            <% } %>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        <%= item.title %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%- item.body.length> 100 ? item.body.substring(0, 100) + '...'
+                                                            :
+                                                            item.body
+                                                            %>
+                                                    </p>
+                                                    <a href="/news/<%= item.id %>" class="btn btn-primary">Read More</a>
+                                                </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                </div>
+                <!-- Album Section -->
 
-    <main>
-        <p>dashboard page</p>
-    </main>
+                <h4>Album</h4>
+
+                <div class="mb-4">
+                    <div class="col-8">
+                        <div id="carouselExampleIndicators" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <% albums.forEach((img, i)=> { %>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                        data-bs-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>"
+                                        aria-current="<%= i === 0 ? 'true' : 'false' %>"
+                                        aria-label="Slide <%= i + 1 %>"></button>
+                                    <% }) %>
+                            </div>
+                            <div class="carousel-inner">
+                                <% albums.forEach((item, index)=> { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="<%= item.images[0].url %>" class="d-block w-100" alt="Album Image">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>
+                                                <%= item.title %>
+                                            </h5>
+                                            <p>
+                                                <%= item.description %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <!-- Breaking News Section -->
+                <div class="mb-4">
+                    <h5 class="fw-bold">Breaking News</h5>
+                    <ul class="list-group">
+                        <% breakingNews.forEach((item, index)=> { %>
+                            <li class="list-group-item">
+                                <a href="/news/<%= item.id %>" class="text-decoration-none">
+                                    <%= item.title %>
+                                </a>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+                <!-- Upcoming Events Section -->
+                <div>
+                    <h5 class="fw-bold">Upcoming Events</h5>
+                    <ul class="list-group">
+                        <% upcomingEvents.forEach((item, index)=> { %>
+                            <li class="list-group-item">
+                                <a href="/album/<%= item.id %>" class="text-decoration-none">
+                                    <%= item.title %>
+                                </a>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>

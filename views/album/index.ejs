@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate.ejs') %>
+
+  <main class="container mt-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-between mb-4">
+          <h1 class="fs-4 fw-bold">Album Gallery</h1>
+        </div>
+        <div class="row">
+          <% album.forEach(item=> { %>
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <a href="/album/<%= item.id %>">
+                  <img src="<%= item.images[0].url %>" class="card-img-top" alt="Album Cover">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <%= item.title %>
+                    </h5>
+                    <p class="card-text">
+                      <%= item.description %>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+      </div>
+    </div>
+  </main>
