@@ -1,24 +1,21 @@
 <% layout('layouts/boilerplate.ejs') %>
-
-  <main class="container mt-3">
+  <main class="container px-5 mt-3">
+    <h1 class="fs-3 mb-4 border-bottom border-dark border-3">Event Album</h1>
     <div class="row">
       <div class="col-12">
-        <div class="d-flex justify-content-between mb-4">
-          <h1 class="fs-4 fw-bold">Album Gallery</h1>
-        </div>
         <div class="row">
           <% album.forEach(item=> { %>
             <div class="col-md-4 mb-4">
               <div class="card">
-                <a href="/album/<%= item.id %>">
+                <a href="/album/<%= item.id %>" class="text-black">
                   <img src="<%= item.images[0].url %>" class="card-img-top" alt="Album Cover">
                   <div class="card-body">
-                    <h5 class="card-title">
+                    <h6 class="card-title">
                       <%= item.title %>
-                    </h5>
-                    <p class="card-text">
-                      <%= item.description %>
-                    </p>
+                    </h6>
+                    <small class="card-text text-secondary">
+                      <%= item.date.toLocaleDateString('en-GB') %>
+                    </small>
                   </div>
                 </a>
               </div>

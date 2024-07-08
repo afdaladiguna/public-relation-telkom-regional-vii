@@ -185,6 +185,7 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
   const upcomingEvents = await Album.find({
     eventDate: { $gte: new Date() },
   }).limit(5); // Upcoming events
+  console.log(news);
 
   res.render("dashboard", { albums, news, breakingNews, upcomingEvents });
 });

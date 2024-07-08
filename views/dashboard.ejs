@@ -14,15 +14,52 @@
 </head>
 <% layout('layouts/boilerplate.ejs') %>
 
-    <div class="container mt-4">
+    <div class="container px-5 mt-3">
         <div class="row">
             <!-- Main Content Area -->
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <!-- News Section -->
                 <div class="mb-4">
-                    <h4 class="fw-bold">Latest News</h4>
+                    <h4 class="fw-normal mb-3">Latest News</h4>
+                    <div class="col-12">
+                        <div id="newsIndicators" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <% news.slice(0, 2).forEach((item, i)=> { %>
+                                    <button type="button" data-bs-target="#newsIndicators" data-bs-slide-to="<%= i %>"
+                                        class="<%= i === 0 ? 'active' : '' %>"
+                                        aria-current="<%= i === 0 ? 'true' : 'false' %>"
+                                        aria-label="Slide <%= i + 1 %>"></button>
+                                    <% }) %>
+                            </div>
+                            <div class="carousel-inner">
+                                <% news.slice(0, 2).forEach((item, index)=> { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="<%= item.images[0].url %>" class="d-block w-100" alt="News Image">
+                                        <div class="carousel-caption d-none d-md-block mb-2">
+                                            <a href="/news/<%= item.id %>" target="_blank" class="fs-5 p-2 text-white">
+                                                <%= item.title %>
+                                            </a>
+                                            <p><%- item.body.length> 100 ? item.body.substring(0, 100) + '...' :
+                                                    item.body %></p>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#newsIndicators"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#newsIndicators"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <div class="border mt-3"></div>
+                    </div>
                     <div class="row">
-                        <% news.forEach(item=> { %>
+                        <% news.slice(2).forEach(item=> { %>
                             <div class="col-md-6 mb-4">
                                 <div class="card h-100">
                                     <% if(item.images.length) { %>
@@ -33,29 +70,28 @@
                                                 <span class="text-white">No Image</span>
                                             </div>
                                             <% } %>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">
+                                                <div class="card-body pb-0">
+                                                    <h6 class="card-title fw-semibold">
                                                         <%= item.title %>
-                                                    </h5>
-                                                    <p class="card-text">
-                                                        <%- item.body.length> 100 ? item.body.substring(0, 100) + '...'
-                                                            :
-                                                            item.body
-                                                            %>
-                                                    </p>
-                                                    <a href="/news/<%= item.id %>" class="btn btn-primary">Read More</a>
+                                                    </h6>
+                                                    <small class="d-block">
+                                                        <%- item.body.length> 100 ? item.body.substring(0, 140) + '...'
+                                                            : item.body %>
+                                                    </small>
+                                                    <a href="/news/<%= item.id %>"
+                                                        class="btn btn-primary btn-sm py-2 px-3 mt-3">Read More</a>
                                                 </div>
                                 </div>
                             </div>
+
                             <% }) %>
                     </div>
                 </div>
-                <!-- Album Section -->
-
-                <h4>Album</h4>
-
                 <div class="mb-4">
-                    <div class="col-8">
+                    <div class="col-12">
+
+                        <h4 class="fw-normal mb-3">Event Gallery</h4>
+
                         <div id="carouselExampleIndicators" class="carousel slide">
                             <div class="carousel-indicators">
                                 <% albums.forEach((img, i)=> { %>
@@ -69,13 +105,11 @@
                                 <% albums.forEach((item, index)=> { %>
                                     <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
                                         <img src="<%= item.images[0].url %>" class="d-block w-100" alt="Album Image">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>
+                                        <div class="carousel-caption d-none d-md-block mb-2">
+                                            <a href="/album/<%= item.id %>" target="_blank"
+                                                class="fs-5 p-2  text-white">
                                                 <%= item.title %>
-                                            </h5>
-                                            <p>
-                                                <%= item.description %>
-                                            </p>
+                                            </a>
                                         </div>
                                     </div>
                                     <% }) %>
@@ -93,21 +127,22 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <!-- Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <!-- Breaking News Section -->
                 <div class="mb-4">
-                    <h5 class="fw-bold">Breaking News</h5>
+                    <h6 class="">Breaking News</h6>
                     <ul class="list-group">
                         <% breakingNews.forEach((item, index)=> { %>
                             <li class="list-group-item">
                                 <a href="/news/<%= item.id %>" class="text-decoration-none">
                                     <%= item.title %>
                                 </a>
+                                <p>
+                                    <%- item.body.length> 100 ? item.body.substring(0, 100) + '...' : item.body %>
+                                </p>
                             </li>
                             <% }) %>
                     </ul>

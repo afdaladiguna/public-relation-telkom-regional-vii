@@ -1,43 +1,43 @@
 <% layout('layouts/boilerplate.ejs') %>
-  <h1 class="fs-2 pb-3">Berita Terkini</h1>
-
-  <div class="row">
-    <% for(let item of news) { %>
-      <div class="col-12 mb-4">
-        <div class="card h-100 shadow-sm">
-          <a class="text-decoration-none text-black d-flex flex-row" href="/news/<%= item.id %>">
-            <% if(item.images.length) { %>
-              <img src="<%= item.images[0].url %>" alt="<%= item.title %>" class="img-fluid"
-                style="width: 350px; height: auto; object-fit: cover;">
-              <% } else { %>
-                <div class="bg-secondary d-flex align-items-center justify-content-center"
-                  style="width: 350px; height: 200px;">
-                  <span class="text-white">No Image</span>
-                </div>
-                <% } %>
-                  <div class="card-body">
-                    <h5 class="card-title fw-bold">
-                      <%= item.title %>
-                    </h5>
-                    <span class="badge bg-secondary mb-2">
-                      <% function capitalizeFirstLetter(string) { return string.charAt(0).toUpperCase() +
-                        string.slice(1); } %>
-                        <%= capitalizeFirstLetter(item.category) %>
-                    </span>
-                    <p class="card-text">
-                      <%- truncateDescription(item.body, 210) %>
-                    </p>
-                    <p class="card-text"><small class="text-muted">by <%= item.author %> - <%=
-                            item.createdAt.toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' ,
-                            day: 'numeric' }) %>
-                      </small>
-
-                    </p>
+  <div class="container px-5 mt-3">
+    <h1 class="fs-3 mb-4 border-bottom border-dark border-3">Latest News</h1>
+    <div class="row">
+      <% for(let item of news) { %>
+        <div class="col-12 mb-4">
+          <div class="card h-100 shadow-sm">
+            <a class="text-decoration-none text-black d-flex flex-row" href="/news/<%= item.id %>">
+              <% if(item.images.length) { %>
+                <img src="<%= item.images[0].url %>" alt="<%= item.title %>" class="img-fluid"
+                  style="width: 350px; height: auto; object-fit: cover;">
+                <% } else { %>
+                  <div class="bg-secondary d-flex align-items-center justify-content-center"
+                    style="width: 750px; height: auto;">
+                    <span class="text-white">No Image</span>
                   </div>
-          </a>
+                  <% } %>
+                    <div class="card-body">
+                      <h5 class="card-title fw-bold mb-1">
+                        <%= item.title %>
+                      </h5>
+                      <span class="badge bg-secondary">
+                        <% function capitalizeFirstLetter(string) { return string.charAt(0).toUpperCase() +
+                          string.slice(1); } %>
+                          <%= capitalizeFirstLetter(item.category) %>
+                      </span>
+                      <p class="card-text mb-2">
+                        <small><%- truncateDescription(item.body, 300) %></small>
+                      </p>
+                      <p class="card-text"><small class="text-muted">
+                          <%= item.createdAt.toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' ,
+                            day: 'numeric' }) %>
+                        </small>
+                      </p>
+                    </div>
+            </a>
+          </div>
         </div>
-      </div>
-      <% } %>
+        <% } %>
+    </div>
   </div>
 
   <script>
