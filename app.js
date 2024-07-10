@@ -77,7 +77,7 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(helmet());
+// app.use(helmet());
 
 const scriptSrcUrls = [
   "https://stackpath.bootstrapcdn.com/",
@@ -120,6 +120,7 @@ app.use(
         "https://res.cloudinary.com/dmt77y4qm/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
         "https://images.unsplash.com/",
       ],
+      mediaSrc: ["https://res.cloudinary.com/dmt77y4qm/"],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
   })

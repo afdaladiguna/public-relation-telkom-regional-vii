@@ -9,9 +9,19 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "public-relation-telkom-regional-vii",
-    allowedFormats: ["jpeg", "png", "jpg"],
+  params: async (req, file) => {
+    let resource_type = "auto";
+    if (file.mimetype.startsWith("image/")) {
+      resource_type = "image";
+    } else if (file.mimetype.startsWith("video/")) {
+      resource_type = "video";
+    }
+    return {
+      folder: "public-relation-telkom-regional-vii",
+      allowed_formats: ["jpeg", "jpg", "png", "mp4"],
+      public_id: `${Date.now()}-${file.originalname}`,
+      resource_type: resource_type,
+    };
   },
 });
 

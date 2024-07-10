@@ -6,19 +6,19 @@
         <form action="/management/album" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="title" class="form-label">Title album</label>
-            <input type="text" class="form-control" id="title" name="album[title]">
+            <input type="text" class="form-control" id="title" name="album[title]" required>
           </div>
           <div class="mb-3">
             <label for="subtitle" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" name="album[description]">
+            <input type="text" class="form-control" id="description" name="album[description]" required>
           </div>
           <div class="mb-3">
             <label for="date" class="form-label">Kegiatan Acara</label>
-            <input type="date" class="form-control" id="date" name="album[date]">
+            <input type="date" class="form-control" id="date" name="album[date]" required>
           </div>
           <div class="mb-3">
             <label for="image" class="form-label">Upload Gambar</label>
-            <input class="form-control" type="file" id="image" name="image" multiple>
+            <input class="form-control" type="file" id="image" name="image" multiple required>
           </div>
           <button type="submit" class="btn btn-primary py-2 px-4 mb-4">Submit</button>
       </div>

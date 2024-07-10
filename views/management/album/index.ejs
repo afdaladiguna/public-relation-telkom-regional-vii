@@ -1,4 +1,5 @@
 <% layout('layouts/boilerplate.ejs') %>
+
   <main class="container mt-3">
     <div class="row">
       <div class="d-flex justify-content-between">
@@ -40,7 +41,17 @@
             </td>
             <td class="align-middle col-3">
               <a class="text-black d-block w-100 py-3" href="/album/<%= item.id %>">
-                <img src="<%= item.images[0].url %>" class="w-75" alt="">
+                <% if (item.images[0].url.endsWith('.mp4')) { %>
+                  <!-- Display a thumbnail for the video -->
+                  <video class="w-75" muted>
+                    <source src="<%= item.images[0].url %>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <% } else { %>
+                    <!-- Display the first image as the thumbnail -->
+                    <img src="<%= item.images[0].url %>" class="w-75" alt="Album Cover">
+                    <% } %>
+              </a>
             </td>
             <td class="border-top align-middle">
               <div class="dropdown">
