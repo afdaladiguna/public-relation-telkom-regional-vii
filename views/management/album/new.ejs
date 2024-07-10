@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-9">
         <h2>Add album</h2>
-        <form action="/management/album" method="POST" enctype="multipart/form-data">
+        <form id="albumForm" action="/management/album" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="title" class="form-label">Title album</label>
             <input type="text" class="form-control" id="title" name="album[title]" required>
@@ -20,58 +20,40 @@
             <label for="image" class="form-label">Upload Gambar</label>
             <input class="form-control" type="file" id="image" name="image" multiple required>
           </div>
-          <button type="submit" class="btn btn-primary py-2 px-4 mb-4">Submit</button>
+          <button type="submit" id="formBtn" class="btn btn-primary py-2 px-4 mb-4" disabled>Submit</button>
+          <div id="spinner" class="spinner-border spinner-border-sm mb-2 ms-3 visually-hidden" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </form>
       </div>
-
-      <!-- LEFT INFORMATION -->
-      <!-- <div class="col-md-3">
-        <div class="border border-1 rounded py-4 px-3 position-sticky" style="top: 20px;">
-          <div class="d-flex flex-row-reverse">
-          </div>
-          <div class="mb-3 fw-bold">
-            <label for="categoryInfo" class="mb-1">Category</label>
-            <select class="form-select mb-4" id="categoryInfo" name="album[category]">
-              <option value="regional">Regional</option>
-              <option value="witel">Witel</option>
-            </select>
-          </div>
-          <div class="border border-light-subtle my-3"></div>
-          <div class="mb-3">
-            <label class="fw-bold">Created At</label>
-            <p class="text-secondary">
-              <%= new Date().toLocaleString('en-GB') %>
-            </p>
-          </div>
-          <div class="mb-3">
-            <label class="fw-bold">Updated At</label>
-            <p class="text-secondary">
-              <%= new Date().toLocaleString('en-GB') %>
-            </p>
-          </div>
-          <div class="border border-light-subtle my-3"></div>
-          <div class="mb-3">
-            <label class="fw-bold">Contributor</label>
-            <p class="text-secondary">
-              <%= currentUser.name %>
-            </p>
-          </div>
-        </div>
-      </div> -->
-      </form>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-
-  <!-- Initialize Quill editor -->
   <script>
-    const quill = new Quill('#editor', {
-      theme: 'snow'
+    const form = document.getElementById('albumForm');
+    const formBtn = document.getElementById('formBtn');
+    const spinner = document.getElementById('spinner');
+    const fields = form.querySelectorAll('input[required]');
+
+    function checkFormValidity() {
+      let allFilled = true;
+      fields.forEach(field => {
+        if (!field.value) {
+          allFilled = false;
+        }
+      });
+      formBtn.disabled = !allFilled;
+    }
+
+    fields.forEach(field => {
+      field.addEventListener('input', checkFormValidity);
     });
 
-    const form = document.querySelector('form');
-    form.onsubmit = function () {
-      const bodyInput = document.querySelector('#body');
-      bodyInput.value = quill.root.innerHTML;
-    };
+    form.addEventListener('submit', function (event) {
+      formBtn.disabled = true;
+      spinner.classList.remove("visually-hidden");
+    });
+
+    // Initial check in case some fields are pre-filled
+    checkFormValidity();
   </script>

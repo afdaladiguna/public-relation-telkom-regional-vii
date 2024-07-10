@@ -11,7 +11,7 @@
         <form action="/management/news" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="title" class="form-label">Title News</label>
-            <input type="text" class="form-control" id="title" name="news[title]">
+            <input type="text" class="form-control" id="title" name="news[title]" required>
           </div>
           <div class="mb-3">
             <label for="subtitle" class="form-label">Sub Title News</label>
@@ -20,11 +20,11 @@
           <div class="mb-3">
             <label for="editor" class="form-label">Body</label>
             <div id="editor" style="height: 300px;"></div>
-            <input type="hidden" id="body" name="news[body]">
+            <input type="hidden" id="body" name="news[body]" required>
           </div>
           <div class="mb-3">
             <label for="image" class="form-label">Upload Gambar</label>
-            <input class="form-control" type="file" id="image" name="image" multiple>
+            <input class="form-control" type="file" id="image" name="image" accept="image/*" multiple>
           </div>
       </div>
 
@@ -32,7 +32,7 @@
       <div class="col-md-3">
         <div class="border border-1 rounded py-4 px-3 position-sticky" style="top: 20px;">
           <div class="d-flex flex-row-reverse">
-            <button type="submit" class="btn btn-primary py-2 px-4 mb-4">Submit</button>
+            <button type="submit" class="btn btn-primary py-2 px-4 mb-4" id="formBtn">Submit</button>
           </div>
           <div class="mb-3 fw-bold">
             <label for="categoryInfo" class="mb-1">Category</label>
@@ -74,6 +74,13 @@
     const quill = new Quill('#editor', {
       theme: 'snow'
     });
+
+    const formBtn = document.getElementById('formBtn');
+
+    formBtn.addEventListener('submit', () => {
+      formBtn.disabled = true;
+    })
+
 
     const form = document.querySelector('form');
     form.onsubmit = function () {
