@@ -3,7 +3,7 @@
   <main class="container mt-3">
     <div class="row">
       <div class="d-flex justify-content-between">
-        <h1 class="fs-4 fw-bold">Album</h1>
+        <h1 class="fs-4 fw-bold">Gallery Management</h1>
         <div>
           <a href="/management/album/create" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#fff" class="bi bi-plus-lg me-2"
@@ -20,14 +20,14 @@
       <thead>
         <tr>
           <th scope="col">Event</th>
-          <th scope="col">Date Event</th>
-          <th scope="col">Photo</th>
+          <th scope="col">Date</th>
+          <th scope="col">Gallery</th>
         </tr>
       </thead>
       <tbody>
         <% album.forEach(item=> { %>
           <tr>
-            <td class="col-5">
+            <td class="col-5 align-middle">
               <div class="h-100">
                 <a class="text-black d-block w-100 py-5" href="/album/<%= item.id %>">
                   <%= item.title %>
@@ -36,7 +36,7 @@
             </td>
             <td class="align-middle">
               <p class="text-secondary">
-                <%= item.date %>
+                <%= item.date.toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
               </p>
             </td>
             <td class="align-middle col-3">

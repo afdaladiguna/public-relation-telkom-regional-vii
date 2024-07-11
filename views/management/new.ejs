@@ -5,9 +5,16 @@
 
 <% layout('layouts/boilerplate.ejs') %>
   <div class="container mt-4">
+    <a href="/management/news" class="btn btn-outline-secondary mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#000" class="bi bi-arrow-left me-2"
+        viewBox="0 1 16 16">
+        <path fill-rule="evenodd"
+          d="M5.854 4.146a.5.5 0 0 0-.708 0L.146 9.146a.5.5 0 0 0 0 .708l5 5a.5.5 0 0 0 .708-.708L1.707 9.5H15.5a.5.5 0 0 0 0-1H1.707l4.147-4.146a.5.5 0 0 0 0-.708z" />
+      </svg>Back
+    </a>
     <div class="row">
       <div class="col-md-9">
-        <h2>Add News</h2>
+        <h2 class="text-center">Add News</h2>
         <form action="/management/news" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="title" class="form-label">Title News</label>
@@ -23,7 +30,7 @@
             <input type="hidden" id="body" name="news[body]" required>
           </div>
           <div class="mb-3">
-            <label for="image" class="form-label">Upload Gambar</label>
+            <label for="image" class="form-label">Upload Image <span class="text-secondary">(Max 10MB)</span></label>
             <input class="form-control" type="file" id="image" name="image" accept="image/*" multiple>
           </div>
       </div>

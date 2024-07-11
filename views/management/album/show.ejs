@@ -19,7 +19,7 @@
         </div>
         <div class="mb-4">
           <p class="text-muted">
-            <%= album.date %>
+            <%= album.date.toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' , day: 'numeric' }) %>
           </p>
           <p>
             <%= album.description %>

@@ -54,7 +54,7 @@ module.exports.updateNews = async (req, res) => {
     });
   }
   req.flash("success", "Successfully update news!");
-  res.redirect(`news/${news._id}`);
+  res.redirect(`/news/${news._id}`);
 };
 
 module.exports.deleteNews = async (req, res) => {

@@ -179,7 +179,8 @@ app.get("/news/:id", isLoggedIn, async (req, res, next) => {
     if (!news) {
       throw new ExpressError("News not found", 404);
     }
-    res.render("management/show", { news });
+    const latestNews = await News.find().sort({ createdAt: -1 }).limit(5); // Fetch the latest 5 news articles
+    res.render("management/show", { news, latestNews });
   } catch (error) {
     next(error);
   }
