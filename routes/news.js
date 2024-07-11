@@ -11,7 +11,7 @@ const News = require("../models/news");
 
 router
   .route("/")
-  .get(isLoggedIn, catchAsync(news.index))
+  .get(isLoggedIn, isAdmin, catchAsync(news.index))
   .post(
     isLoggedIn,
     isAdmin,

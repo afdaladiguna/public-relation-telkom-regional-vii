@@ -210,33 +210,35 @@
           </a>
         </li>
 
-        <li class="sidebar-item">
-          <a href="" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard"
-            aria-expanded="false" aria-controls="dashboard">
-            <i class="fa-solid fa-sliders pe-2"></i>
-            Management
-          </a>
-          <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item ms-4">
-              <a href="/management/news" class="sidebar-link">News Management</a>
+        <% if(!currentUser) { %>
+          <li class="sidebar-item">
+            <a href="" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard"
+              aria-expanded="false" aria-controls="dashboard">
+              <i class="fa-solid fa-sliders pe-2"></i>
+              Management
+            </a>
+            <ul id="dashboard" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+              <li class="sidebar-item ms-4">
+                <a href="/management/news" class="sidebar-link">News Management</a>
+              </li>
+              <li class="sidebar-item ms-4">
+                <a href="/management/album" class="sidebar-link">Gallery Management</a>
+              </li>
+            </ul>
+          </li>
+          <% } %>
+            <li class="sidebar-item">
+              <a href="/news" class="sidebar-link">
+                <i class="fa-solid fa-list pe-2"></i>
+                Recent News
+              </a>
             </li>
-            <li class="sidebar-item ms-4">
-              <a href="/management/album" class="sidebar-link">Gallery Management</a>
+            <li class="sidebar-item">
+              <a href="/album" class="sidebar-link">
+                <i class="fa-solid fa-list pe-2"></i>
+                Event Gallery
+              </a>
             </li>
-          </ul>
-        </li>
-        <li class="sidebar-item">
-          <a href="/news" class="sidebar-link">
-            <i class="fa-solid fa-list pe-2"></i>
-            Recent News
-          </a>
-        </li>
-        <li class="sidebar-item">
-          <a href="/album" class="sidebar-link">
-            <i class="fa-solid fa-list pe-2"></i>
-            Event Gallery
-          </a>
-        </li>
       </ul>
     </div>
   </aside>

@@ -11,7 +11,7 @@ const Album = require("../models/album");
 
 router
   .route("/")
-  .get(isLoggedIn, catchAsync(album.index))
+  .get(isLoggedIn, isAdmin, catchAsync(album.index))
   .post(
     isLoggedIn,
     isAdmin,
