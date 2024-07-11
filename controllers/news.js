@@ -5,7 +5,7 @@ const News = require("../models/news");
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-  const news = await News.find({});
+  const news = await News.find().populate("author", "name");
   res.render("management/index", { news });
 };
 
@@ -25,23 +25,12 @@ module.exports.createNews = async (req, res, next) => {
   res.redirect(`/news`);
 };
 
-module.exports.showNews = async (req, res) => {
-  const news = await News.findById(req.params.id);
-  // .populate({ path: "reviews", populate: { path: "author" } })
-  // .populate("author");
-  if (!news) {
-    req.flash("error", "Cannot find that news!");
-    return res.redirect("/news");
-  }
-  res.render("management/show", { news });
-};
-
 module.exports.renderEditForm = async (req, res) => {
   const { id } = req.params;
   const news = await News.findById(id);
   if (!news) {
     req.flash("error", "Cannot find that news!");
-    return res.redirect(`/news/${id}`);
+    return res.redirect(`/news`);
   }
   res.render("management/edit", { news });
 };

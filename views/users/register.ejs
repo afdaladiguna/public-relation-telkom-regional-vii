@@ -1,23 +1,12 @@
-<% layout('layouts/boilerplate')%>
+<% layout('layouts/boilerplate') %>
     <div class="container d-flex justify-content-center align-items-center mt-3">
         <div class="row justify-content-center" style="width: 50em;">
             <div class="mb-5 w-75">
                 <div class="card shadow">
-                    <!-- <img src="https://res.cloudinary.com/depkm8h6l/image/upload/f_auto,q_auto/v1/fikom-showcase/logo-fikom"
-                    alt="" class="card-img-top bg-secondary" style="width: 10em;"/> -->
-
-                    <!-- const UserSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  name: String,
-  admin: Boolean,
-}); -->
                     <div class="card-body">
                         <h5 class="card-title text-center border-bottom py-3 mb-4">Register</h5>
-                        <form action="/register" method="POST" class="validated-form needs-validation" novalidate>
+                        <form id="registerForm" action="/register" method="POST" class="validated-form needs-validation"
+                            novalidate>
                             <div class="row">
                                 <div class="mb-3">
                                     <label class="form-label" for="username"><b>Username</b></label>
@@ -34,19 +23,52 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="name">Nama Lengkap</label>
-                                    <input class="form-control" type="text" id="name" name="name" required autofocus>
+                                    <input class="form-control" type="text" id="name" name="name" required>
                                 </div>
                                 <div class="mb-3 mt-1">
                                     <label class="form-label" for="name">Apakah user adalah admin?</label>
                                     <input class="form-check-input border-2 border-secondary ms-1" type="checkbox"
                                         name="admin" id="admin" value="true">
                                 </div>
-
                             </div>
-                            <button class="btn btn-success btn-block">Register</button>
+                            <button type="submit" id="registerBtn" class="btn btn-success btn-block"
+                                disabled>Register</button>
+                            <div id="registerSpinner" class="spinner-border spinner-border-sm mb-2 ms-3 visually-hidden"
+                                role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const registerBtn = document.getElementById('registerBtn');
+        const registerSpinner = document.getElementById('registerSpinner');
+        const registerFields = registerForm.querySelectorAll('input[required]');
+
+        function checkRegisterFormValidity() {
+            let allFilled = true;
+            registerFields.forEach(field => {
+                if (!field.value) {
+                    allFilled = false;
+                }
+            });
+            registerBtn.disabled = !allFilled;
+        }
+
+        registerFields.forEach(field => {
+            field.addEventListener('input', checkRegisterFormValidity);
+        });
+
+        registerForm.addEventListener('submit', function (event) {
+            registerBtn.disabled = true;
+            registerSpinner.classList.remove("visually-hidden");
+        });
+
+        // Initial check in case some fields are pre-filled
+        checkRegisterFormValidity();
+    </script>

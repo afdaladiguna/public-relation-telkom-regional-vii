@@ -152,17 +152,20 @@ app.get("/", (req, res) => {
 
 app.get("/album", isLoggedIn, async (req, res) => {
   const album = await Album.find({});
-  // console.log(album);
   res.render("album", { album });
 });
 
-app.get("/album/:id", isLoggedIn, async (req, res) => {
-  const album = await Album.findById(req.params.id);
-  if (!album) {
-    req.flash("error", "Cannot find that album!");
-    return res.redirect("/album");
+app.get("/album/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    const album = await Album.findById(req.params.id);
+    if (!album) {
+      req.flash("error", "Cannot find that album!");
+      return res.redirect("/album");
+    }
+    res.render("management/album/show", { album });
+  } catch (error) {
+    next(error);
   }
-  res.render("management/album/show", { album });
 });
 
 app.get("/news", isLoggedIn, async (req, res) => {
@@ -170,13 +173,16 @@ app.get("/news", isLoggedIn, async (req, res) => {
   res.render("news", { news });
 });
 
-app.get("/news/:id", isLoggedIn, async (req, res) => {
-  const news = await News.findById(req.params.id);
-  if (!news) {
-    req.flash("error", "Cannot find that news!");
-    return res.redirect("/news");
+app.get("/news/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    const news = await News.findById(req.params.id).populate("author", "name");
+    if (!news) {
+      throw new ExpressError("News not found", 404);
+    }
+    res.render("management/show", { news });
+  } catch (error) {
+    next(error);
   }
-  res.render("management/show", { news });
 });
 
 app.get("/dashboard", isLoggedIn, async (req, res) => {
@@ -186,8 +192,6 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
   const upcomingEvents = await Album.find({
     eventDate: { $gte: new Date() },
   }).limit(5); // Upcoming events
-  console.log(news);
-
   res.render("dashboard", { albums, news, breakingNews, upcomingEvents });
 });
 
