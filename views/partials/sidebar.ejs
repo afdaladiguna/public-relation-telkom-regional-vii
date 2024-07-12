@@ -210,7 +210,7 @@
           </a>
         </li>
 
-        <% if(!currentUser) { %>
+        <% if(currentUser.admin) { %>
           <li class="sidebar-item">
             <a href="" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard"
               aria-expanded="false" aria-controls="dashboard">

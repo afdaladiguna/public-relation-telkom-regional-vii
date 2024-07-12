@@ -20,110 +20,145 @@
                 <!-- News Section -->
                 <div class="mb-4">
                     <h4 class="fw-normal mb-3">Latest News</h4>
-                    <div class="col-12">
-                        <div id="newsIndicators" class="carousel slide">
-                            <div class="carousel-indicators">
-                                <% news.slice(0, 2).forEach((item, i)=> { %>
-                                    <button type="button" data-bs-target="#newsIndicators" data-bs-slide-to="<%= i %>"
-                                        class="<%= i === 0 ? 'active' : '' %>"
-                                        aria-current="<%= i === 0 ? 'true' : 'false' %>"
-                                        aria-label="Slide <%= i + 1 %>"></button>
-                                    <% }) %>
+
+                    <% if (news.length===0) { %>
+                        <div class="col-12 mb-4">
+                            <div class="alert alert-secondary text-center" role="alert">
+                                Recent news is still empty.
                             </div>
-                            <div class="carousel-inner">
-                                <% news.slice(0, 2).forEach((item, index)=> { %>
-                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <img src="<%= item.images[0].url %>" class="d-block w-100" alt="News Image">
-                                        <div class="carousel-caption d-none d-md-block mb-2">
-                                            <a href="/news/<%= item.id %>" target="_blank" class="fs-5 p-2 text-white">
-                                                <%= item.title %>
-                                            </a>
-                                            <p><%- item.body.length> 100 ? item.body.substring(0, 100) + '...' :
-                                                    item.body %></p>
+                        </div>
+                        <% } else { %>
+
+                            <div class="col-12">
+                                <div id="newsIndicators" class="carousel slide">
+                                    <div class="carousel-indicators">
+                                        <% news.slice(0, 2).forEach((item, i)=> { %>
+                                            <button type="button" data-bs-target="#newsIndicators"
+                                                data-bs-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>"
+                                                aria-current="<%= i === 0 ? 'true' : 'false' %>"
+                                                aria-label="Slide <%= i + 1 %>"></button>
+                                            <% }) %>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <% news.slice(0, 2).forEach((item, index)=> { %>
+                                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                                <% if (item.images.length> 0) { %>
+                                                    <img src="<%= item.images[0].url %>" class="d-block w-100"
+                                                        alt="News Image">
+                                                    <% } else { %>
+                                                        <div class="bg-secondary d-flex align-items-center justify-content-center"
+                                                            style="height: 300px;">
+                                                            <span class="text-white">No Image</span>
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="carousel-caption d-none d-md-block mb-2">
+                                                                <a href="/news/<%= item.id %>" target="_blank"
+                                                                    class="fs-5 p-2 text-white">
+                                                                    <%= item.title %>
+                                                                </a>
+                                                                <p><%- item.body.length> 100 ? item.body.substring(0,
+                                                                        100) + '...' : item.body %></p>
+                                                            </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#newsIndicators"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#newsIndicators"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div class="border mt-3"></div>
+                            </div>
+                            <div class="row">
+                                <% news.slice(2).forEach(item=> { %>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card h-100">
+                                            <% if (item.images.length> 0) { %>
+                                                <img src="<%= item.images[0].url %>" class="card-img-top"
+                                                    alt="News Image">
+                                                <% } else { %>
+                                                    <div class="bg-secondary d-flex align-items-center justify-content-center"
+                                                        style="height: 200px;">
+                                                        <span class="text-white">No Image</span>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="card-body pb-0">
+                                                            <h6 class="card-title fw-semibold">
+                                                                <%= item.title %>
+                                                            </h6>
+                                                            <small class="d-block">
+                                                                <%- item.body.length> 100 ? item.body.substring(0, 140)
+                                                                    + '...' : item.body %>
+                                                            </small>
+                                                            <a href="/news/<%= item.id %>"
+                                                                class="btn btn-primary btn-sm py-2 px-3 mt-3">Read
+                                                                More</a>
+                                                        </div>
                                         </div>
                                     </div>
                                     <% }) %>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#newsIndicators"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#newsIndicators"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                        <div class="border mt-3"></div>
-                    </div>
-                    <div class="row">
-                        <% news.slice(2).forEach(item=> { %>
-                            <div class="col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <% if(item.images.length) { %>
-                                        <img src="<%= item.images[0].url %>" class="card-img-top" alt="News Image">
-                                        <% } else { %>
-                                            <div class="bg-secondary d-flex align-items-center justify-content-center"
-                                                style="width: auto; height: 200px;">
-                                                <span class="text-white">No Image</span>
-                                            </div>
-                                            <% } %>
-                                                <div class="card-body pb-0">
-                                                    <h6 class="card-title fw-semibold">
-                                                        <%= item.title %>
-                                                    </h6>
-                                                    <small class="d-block">
-                                                        <%- item.body.length> 100 ? item.body.substring(0, 140) + '...'
-                                                            : item.body %>
-                                                    </small>
-                                                    <a href="/news/<%= item.id %>"
-                                                        class="btn btn-primary btn-sm py-2 px-3 mt-3">Read More</a>
-                                                </div>
-                                </div>
-                            </div>
-
-                            <% }) %>
-                    </div>
+                            <% } %>
                 </div>
+
                 <div class="mb-4">
                     <div class="col-12">
-
                         <h4 class="fw-normal mb-3">Event Gallery</h4>
-
-                        <div id="carouselExampleIndicators" class="carousel slide">
-                            <div class="carousel-indicators">
-                                <% albums.forEach((img, i)=> { %>
-                                    <button type="button" data-bs-target="#carouselExampleIndicators"
-                                        data-bs-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>"
-                                        aria-current="<%= i === 0 ? 'true' : 'false' %>"
-                                        aria-label="Slide <%= i + 1 %>"></button>
-                                    <% }) %>
+                        <% if (albums.length===0) { %>
+                            <div class="col-12 mb-4">
+                                <div class="alert alert-secondary text-center" role="alert">
+                                    Gallery is still empty.
+                                </div>
                             </div>
-                            <div class="carousel-inner">
-                                <% albums.forEach((item, index)=> { %>
-                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <img src="<%= item.images[0].url %>" class="d-block w-100" alt="Album Image">
-                                        <div class="carousel-caption d-none d-md-block mb-2">
-                                            <a href="/album/<%= item.id %>" target="_blank"
-                                                class="fs-5 p-2  text-white">
-                                                <%= item.title %>
-                                            </a>
-                                        </div>
+                            <% } else { %>
+                                <div id="carouselExampleIndicators" class="carousel slide">
+                                    <div class="carousel-indicators">
+                                        <% albums.forEach((img, i)=> { %>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                data-bs-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>"
+                                                aria-current="<%= i === 0 ? 'true' : 'false' %>"
+                                                aria-label="Slide <%= i + 1 %>"></button>
+                                            <% }) %>
                                     </div>
-                                    <% }) %>
-                            </div>
-                            <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
+                                    <div class="carousel-inner">
+                                        <% albums.forEach((item, index)=> { %>
+                                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                                <% if (item.images.length> 0) { %>
+                                                    <img src="<%= item.images[0].url %>" class="d-block w-100"
+                                                        alt="Album Image">
+                                                    <% } else { %>
+                                                        <div class="bg-secondary d-flex align-items-center justify-content-center"
+                                                            style="height: 300px;">
+                                                            <span class="text-white">No Image</span>
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="carousel-caption d-none d-md-block mb-2">
+                                                                <a href="/album/<%= item.id %>" target="_blank"
+                                                                    class="fs-5 p-2 text-white">
+                                                                    <%= item.title %>
+                                                                </a>
+                                                            </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <% } %>
                     </div>
                 </div>
             </div>
@@ -132,31 +167,31 @@
             <div class="col-md-4">
                 <!-- Breaking News Section -->
                 <div class="mb-4">
-                    <h6 class="">Breaking News</h6>
+                    <h6 class="">Latest News</h6>
                     <ul class="list-group">
-                        <% breakingNews.forEach((item, index)=> { %>
-                            <li class="list-group-item">
-                                <a href="/news/<%= item.id %>" class="text-decoration-none">
-                                    <%= item.title %>
-                                </a>
-                                <p>
-                                    <%- item.body.length> 100 ? item.body.substring(0, 100) + '...' : item.body %>
-                                </p>
-                            </li>
-                            <% }) %>
-                    </ul>
-                </div>
-                <!-- Upcoming Events Section -->
-                <div>
-                    <h5 class="fw-bold">Upcoming Events</h5>
-                    <ul class="list-group">
-                        <% upcomingEvents.forEach((item, index)=> { %>
-                            <li class="list-group-item">
-                                <a href="/album/<%= item.id %>" class="text-decoration-none">
-                                    <%= item.title %>
-                                </a>
-                            </li>
-                            <% }) %>
+                        <% if (breakingNews.length===0) { %>
+                            <div class="alert alert-secondary text-center mt-3" role="alert">
+                                No breaking news available.
+                            </div>
+                            <% } else { %>
+                                <% breakingNews.forEach((item, index)=> { %>
+                                    <li class="list-group-item lh-sm mb-0 py-0 pt-2">
+                                        <a href="/news/<%= item.id %>" class="text-decoration-none"
+                                            style="font-size: 0.9em;">
+                                            <%- item.title.length> 100 ?
+                                                item.title.substring(0, 50)
+                                                + '...' :
+                                                item.title
+                                                %>
+                                        </a>
+                                        <span class="d-block mt-2" style="font-size: 0.8em;"><%- item.body.length> 100 ?
+                                                item.body.substring(0, 70)
+                                                + '...' :
+                                                item.body
+                                                %></span>
+                                    </li>
+                                    <% }) %>
+                                        <% } %>
                     </ul>
                 </div>
             </div>

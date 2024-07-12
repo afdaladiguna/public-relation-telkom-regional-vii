@@ -24,7 +24,7 @@ router.get("/write", isLoggedIn, isAdmin, news.renderNewForm);
 
 router
   .route("/:id")
-  .get(isLoggedIn, catchAsync(news.showNews))
+  .get(isLoggedIn, isAdmin, catchAsync(news.showNews))
   .put(
     isLoggedIn,
     isAdmin,

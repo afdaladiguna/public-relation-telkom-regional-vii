@@ -187,13 +187,15 @@ app.get("/news/:id", isLoggedIn, async (req, res, next) => {
 });
 
 app.get("/dashboard", isLoggedIn, async (req, res) => {
-  const albums = await Album.find().limit(3); // Adjust limit as needed
-  const news = await News.find().limit(4); // Adjust limit as needed
-  const breakingNews = await News.find().sort({ createdAt: -1 }).limit(5); // Latest breaking news
-  const upcomingEvents = await Album.find({
-    eventDate: { $gte: new Date() },
-  }).limit(5); // Upcoming events
-  res.render("dashboard", { albums, news, breakingNews, upcomingEvents });
+  try {
+    const albums = await Album.find().limit(3); // Adjust limit as needed
+    const news = await News.find().limit(4); // Adjust limit as needed
+    const breakingNews = await News.find().sort({ createdAt: -1 }).limit(5); // Latest breaking news
+    res.render("dashboard", { albums, news, breakingNews });
+  } catch (err) {
+    console.error("Error fetching dashboard data:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.all("*", (req, res, next) => {

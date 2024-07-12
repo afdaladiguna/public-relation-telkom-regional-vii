@@ -26,10 +26,7 @@
             </svg>Back
           </a>
           <div class="d-flex align-items-center">
-            <p class="article-meta text-muted mb-0 me-3">
-              <%= new Date(news.createdAt).toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' ,
-                day: 'numeric' , }) %>
-            </p>
+
           </div>
         </div>
 
@@ -38,11 +35,15 @@
             <% function capitalizeFirstLetter(string) { return string.charAt(0).toUpperCase() + string.slice(1); } %>
               <%= capitalizeFirstLetter(news.category) %>
           </span>
-          <h1 class="article-title fw-bold">
+          <h1 class="article-title fw-bold fs-2">
             <%= news.title %>
           </h1>
-          <p class="article-meta text-muted">
+          <p class="article-meta text-muted mb-0">
             by <%= news.author.name %>
+          </p>
+          <p class="article-meta text-muted mb-0 me-3">
+            ditulis pada <%= new Date(news.createdAt).toLocaleDateString('en-GB', { year: 'numeric' , month: 'long' ,
+              day: 'numeric' , }) %>
           </p>
         </div>
 

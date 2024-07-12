@@ -23,7 +23,7 @@ router.get("/create", isLoggedIn, isAdmin, album.renderNewForm);
 
 router
   .route("/:id")
-  .get(isLoggedIn, catchAsync(album.showAlbum))
+  .get(isLoggedIn, isAdmin, catchAsync(album.showAlbum))
   .put(
     isLoggedIn,
     isAdmin,

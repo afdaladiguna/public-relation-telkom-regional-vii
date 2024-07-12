@@ -22,7 +22,7 @@ module.exports.renderLogin = (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-  req.flash("success", "Welcome back!");
+  req.flash("success", "Welcome!");
   const redirectUrl = res.locals.returnTo || "/dashboard"; // update this line to use res.locals.returnTo now
   res.redirect(redirectUrl);
 };
