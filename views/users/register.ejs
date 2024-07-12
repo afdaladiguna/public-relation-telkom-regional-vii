@@ -22,10 +22,19 @@
                                     <input class="form-control" type="text" id="name" name="name" required>
                                 </div>
                                 <div class="mb-3 mt-1">
-                                    <label class="form-label" for="name">Apakah user adalah admin?</label>
-                                    <input class="form-check-input border-2 border-secondary ms-1" type="checkbox"
-                                        name="admin" id="admin" value="true">
+                                    <label class="form-label" for="admin-yes">Apakah user adalah admin?</label>
+                                    <div>
+                                        <input class="form-check-input border-2 border-secondary ms-1" type="radio"
+                                            name="admin" id="admin-yes" value="true">
+                                        <label class="form-check-label" for="admin-yes">Yes</label>
+                                    </div>
+                                    <div>
+                                        <input class="form-check-input border-2 border-secondary ms-1" type="radio"
+                                            name="admin" id="admin-no" value="false" checked>
+                                        <label class="form-check-label" for="admin-no">No</label>
+                                    </div>
                                 </div>
+
                             </div>
                             <button type="submit" id="registerBtn" class="btn btn-success btn-block"
                                 disabled>Register</button>
