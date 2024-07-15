@@ -22,19 +22,37 @@
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col">
-        <input type="text" id="filter-category" placeholder="Filter by Category" class="form-control">
-      </div>
-      <div class="col">
+      <div class="col-md-3 input-group-sm">
+        <label for="sort-by">Sort By:</label>
         <select id="sort-by" class="form-select">
           <option value="createdAt">Sort by Date (Newest)</option>
           <option value="updatedAt">Sort by Last Updated (Newest)</option>
           <!-- Add more options for other columns -->
         </select>
       </div>
+      <div class="col-md-3 input-group-sm">
+        <label for="category-filter">Category:</label>
+        <select id="category-filter" class="form-select">
+          <option value="All" selected>All</option>
+          <option value="Regional">Regional</option>
+          <option value="Witel">Witel</option>
+        </select>
+      </div>
+      <div class="col-md-3 input-group-sm">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" class="form-control">
+      </div>
+      <div class="col-md-3 input-group-sm">
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" class="form-control">
+      </div>
     </div>
-
-
+    <div class="row mt-3">
+      <div class="col-md-12 input-group-sm">
+        <label for="search-title">Search Title:</label>
+        <input type="text" id="search-title" class="form-control" placeholder="Enter title">
+      </div>
+    </div>
     <table class="table mt-4" id="news-table">
       <thead>
         <tr>
@@ -46,7 +64,7 @@
       </thead>
       <tbody>
         <% news.forEach(item=> { %>
-          <tr>
+          <tr data-created-at="<%= item.createdAt %>" data-updated-at="<%= item.updatedAt %>">
             <td class="col-5">
               <div class="mt-2 mb-3">
                 <span class="badge text-bg-light border border-2">
@@ -97,112 +115,115 @@
                         <path
                           d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                         <path fill-rule="evenodd"
-                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5h6a.5.5 0 0 0 0-1h-6A1.5 1.5 0 0 0 1 2.5v11z" />
                       </svg>Edit
                     </a>
                   </li>
                   <li>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal"
-                      data-bs-target="#deleteConfirmationModal<%= item.id %>">
+                    <form action="/management/news/<%= item.id %>?_method=DELETE" method="POST">
+                      <button type="submit" class="dropdown-item border-bottom mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-trash me-2" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zM8 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6A.5.5 0 0 1 8 5.5zM10 6a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                          <path fill-rule="evenodd"
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9.5A2.5 2.5 0 0 1 10.5 16h-5A2.5 2.5 0 0 1 3 13.5V4h-.5a1 1 0 1 1 0-2h3a1 1 0 0 1 2 0h3a1 1 0 0 1 1 1zM4.118 4 4 4.118V13.5A1.5 1.5 0 0 0 5.5 15h5a1.5 1.5 0 0 0 1.5-1.5V4.118L11.882 4H4.118zM2.5 3a.5.5 0 0 0 0 1H13.5a.5.5 0 0 0 0-1H2.5z" />
+                        </svg>Delete
+                      </button>
+                    </form>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-x-square me-2" viewBox="0 0 16 16">
+                        class="bi bi-eye me-2" viewBox="0 0 16 16">
                         <path
-                          d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                        <path
-                          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                      </svg>Delete
-                    </button>
+                          d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C3.982 4.668 5.92 3.5 8 3.5c2.08 0 4.018 1.168 5.168 2.457A13.133 13.133 0 0 1 14.827 8a13.133 13.133 0 0 1-1.66 2.043C12.018 11.332 10.08 12.5 8 12.5c-2.08 0-4.018-1.168-5.168-2.457A13.133 13.133 0 0 1 1.173 8z" />
+                        <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 1a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" />
+                      </svg>View
+                    </a>
                   </li>
                 </ul>
               </div>
             </td>
           </tr>
-          <!-- Modal for Delete Confirmation -->
-          <div class="modal fade" id="deleteConfirmationModal<%= item.id %>" tabindex="-1"
-            aria-labelledby="deleteConfirmationModalLabel<%= item.id %>" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="deleteConfirmationModalLabel<%= item.id %>">Confirm Delete</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  Are you sure you want to delete "<%= item.title %>"?
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <!-- Form for actual deletion -->
-                  <form class="d-inline" action="/management/news/<%= item.id %>?_method=DELETE" method="POST">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <% }); %>
+          <% }) %>
       </tbody>
     </table>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script>
-    document.getElementById('export-button').addEventListener('click', () => {
-      const table = document.getElementById('news-table');
-      console.log('table: ', table)
-      const ws = XLSX.utils.table_to_sheet(table);
-      console.log('ws: ', ws)
-      const wb = XLSX.utils.book_new();
-      console.log('wb: ', wb)
-      XLSX.utils.book_append_sheet(wb, ws, `RegionalVII_News_${Date.now()}`);
-      XLSX.writeFile(wb, `RegionalVII_News_${Date.now()}.xlsx`);
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+      const newsTable = document.getElementById('news-table');
+      const sortBy = document.getElementById('sort-by');
+      const categoryFilter = document.getElementById('category-filter');
+      const startDateInput = document.getElementById('start-date');
+      const endDateInput = document.getElementById('end-date');
+      const searchTitleInput = document.getElementById('search-title');
 
-    // Filter function
-    function filterTable() {
-      const filterCategory = document.getElementById('filter-category').value.toUpperCase();
+      sortBy.addEventListener('change', filterAndSortNews);
+      categoryFilter.addEventListener('change', filterAndSortNews);
+      startDateInput.addEventListener('change', filterAndSortNews);
+      endDateInput.addEventListener('change', filterAndSortNews);
+      searchTitleInput.addEventListener('input', filterAndSortNews);
 
-      const table = document.getElementById('news-table');
-      const rows = table.getElementsByTagName('tr');
+      function filterAndSortNews() {
+        const selectedCategory = categoryFilter.value;
+        const selectedSortBy = sortBy.value;
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+        const searchTitle = searchTitleInput.value.toLowerCase();
 
-      for (let i = 0; i < rows.length; i++) {
-        const categoryCell = rows[i].querySelector('.badge');
-        if (categoryCell) {
-          const categoryText = categoryCell.textContent.toUpperCase();
-          if (categoryText.indexOf(filterCategory) > -1) {
-            rows[i].style.display = '';
-          } else {
-            rows[i].style.display = 'none';
+        const rows = Array.from(newsTable.tBodies[0].rows);
+
+        rows.forEach(row => {
+          const rowCategory = row.querySelector('.badge').textContent.trim();
+          const rowCreatedAt = new Date(row.dataset.createdAt);
+          const rowUpdatedAt = new Date(row.dataset.updatedAt);
+          const rowTitle = row.querySelector('a').textContent.toLowerCase();
+
+          let showRow = true;
+
+          if (selectedCategory !== 'All' && rowCategory !== selectedCategory) {
+            showRow = false;
           }
-        }
+
+          if (!isNaN(startDate) && rowCreatedAt < startDate) {
+            showRow = false;
+          }
+
+          if (!isNaN(endDate) && rowCreatedAt > endDate) {
+            showRow = false;
+          }
+
+          if (searchTitle && !rowTitle.includes(searchTitle)) {
+            showRow = false;
+          }
+
+          row.style.display = showRow ? '' : 'none';
+        });
+
+        rows.sort((a, b) => {
+          const aDate = new Date(a.dataset[selectedSortBy]);
+          const bDate = new Date(b.dataset[selectedSortBy]);
+          return bDate - aDate;
+        });
+
+        rows.forEach(row => newsTable.tBodies[0].appendChild(row));
       }
-    }
 
-    // Sort function
-    function sortTable() {
-      const sortBy = document.getElementById('sort-by').value;
-      const table = document.getElementById('news-table');
-      const rows = Array.from(table.rows).slice(1); // Skip header row
+      filterAndSortNews();
 
-      rows.sort((rowA, rowB) => {
-        const cellA = rowA.cells[sortBy === 'createdAt' ? 2 : 3].innerText; // Adjust index based on column
-        const cellB = rowB.cells[sortBy === 'createdAt' ? 2 : 3].innerText;
+      // Export to Excel
+      document.getElementById('export-button').addEventListener('click', function () {
+        const table = document.getElementById('news-table');
+        const tableHtml = table.outerHTML;
 
-        if (sortBy === 'createdAt' || sortBy === 'updatedAt') {
-          return new Date(cellB) - new Date(cellA); // Date sorting
-        } else {
-          return cellA.localeCompare(cellB); // Text sorting
-        }
+        const a = document.createElement('a');
+        const dataType = 'data:application/vnd.ms-excel';
+        const tableHtmlEncoded = encodeURIComponent(tableHtml);
+        a.href = `${dataType}, ${tableHtmlEncoded}`;
+        a.download = 'news_table.xls';
+        a.click();
       });
-
-      // Re-append sorted rows to table
-      rows.forEach(row => {
-        table.appendChild(row);
-      });
-    }
-
-    // Event listeners for filter and sort
-    document.getElementById('filter-category').addEventListener('input', filterTable);
-    document.getElementById('sort-by').addEventListener('change', sortTable);
-
+    });
   </script>
