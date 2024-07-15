@@ -36,7 +36,9 @@
                       Your browser does not support the video tag.
                     </video>
                     <% } else { %>
-                      <img src="<%= media.url %>" class="card-img-top" alt="Album Image <%= index + 1 %>">
+                      <a href="<%= media.url %>" download="<%= `image_${index + 1}` %>">
+                        <img src="<%= media.url %>" class="card-img-top" alt="Album Image <%= index + 1 %>">
+                      </a>
                       <% } %>
                 </div>
               </div>
