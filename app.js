@@ -143,8 +143,6 @@ app.use((req, res, next) => {
 app.use("/", userRoutes);
 app.use("/management/news", newsRoutes);
 app.use("/management/album", albumRoutes);
-// app.use("/projects", projectRoutes);
-// app.use("/projects/:id/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
   res.redirect("/dashboard");

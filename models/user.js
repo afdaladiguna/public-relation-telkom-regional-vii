@@ -17,7 +17,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  admin: Boolean,
+  admin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 UserSchema.plugin(passportLocalMongoose); // automaticly adding username and password field
