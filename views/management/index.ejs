@@ -153,6 +153,37 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('export-button').addEventListener('click', function () {
+        const table = document.getElementById('news-table');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+        // Prepare the data
+        const data = [];
+        // Add header row
+        data.push(['Category', 'Title', 'Details', 'Writer', 'Submitted Date', 'Last Updated']);
+
+        // Add table rows
+        rows.forEach(row => {
+          const category = row.querySelector('.badge').textContent.trim();
+          const title = row.querySelector('a').textContent.trim();
+          const details = row.querySelector('.text-secondary').textContent.trim();
+          const writer = row.querySelector('td:nth-child(2) .text-secondary').textContent.trim();
+          const submittedDate = row.querySelector('td:nth-child(3) .text-secondary').textContent.trim();
+          const lastUpdated = row.querySelector('td:nth-child(3) .text-secondary:last-child').textContent.trim();
+
+          data.push([category, title, details, writer, submittedDate, lastUpdated]);
+        });
+
+        // Create worksheet
+        const ws = XLSX.utils.aoa_to_sheet(data);
+
+        // Create workbook and add worksheet
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'News');
+
+        // Export the workbook
+        XLSX.writeFile(wb, 'news_table.xlsx');
+      });
       const newsTable = document.getElementById('news-table');
       const sortBy = document.getElementById('sort-by');
       const categoryFilter = document.getElementById('category-filter');
@@ -212,18 +243,5 @@
       }
 
       filterAndSortNews();
-
-      // Export to Excel
-      document.getElementById('export-button').addEventListener('click', function () {
-        const table = document.getElementById('news-table');
-        const tableHtml = table.outerHTML;
-
-        const a = document.createElement('a');
-        const dataType = 'data:application/vnd.ms-excel';
-        const tableHtmlEncoded = encodeURIComponent(tableHtml);
-        a.href = `${dataType}, ${tableHtmlEncoded}`;
-        a.download = 'news_table.xls';
-        a.click();
-      });
     });
   </script>
